@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">BancoUTN</string>
+    <string name="para_constituir_tu_plazo_fijo_necesitamos_que_nos_proveas_algunos_datos">Para constituir tu plazo fijo necesitamos que nos proveas algunos datos.</string>
+    <string name="name">Name</string>
+    <string name="apellido">Apellido</string>
+    <string name="moneda">Moneda</string>
+    <string name="simular">Simular</string>
+    <string name="hola">Hola</string>
+    <string name="tasa_efectiva_anual">Tasa Efectiva Anual</string>
+    <string name="capital_a_invertir">Capital a Invertir($)</string>
 </resources>
