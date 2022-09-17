@@ -23,10 +23,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Tasa Nominal Anual" />
+            android:text="@string/tasa_nominal_anual" />
 
         <EditText
-            android:id="@+id/editTextNumberDecimal"
+            android:id="@+id/textoTasaNominal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -50,7 +50,7 @@
             android:text="@string/tasa_efectiva_anual" />
 
         <EditText
-            android:id="@+id/editTextNumberDecimal2"
+            android:id="@+id/textoTasaEfectiva"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -62,7 +62,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="48dp"
         android:orientation="horizontal">
 
         <TextView
@@ -73,7 +73,7 @@
             android:text="@string/capital_a_invertir" />
 
         <EditText
-            android:id="@+id/editTextNumberDecimal3"
+            android:id="@+id/textoCapital"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -81,5 +81,61 @@
             android:inputType="numberDecimal"
             android:minHeight="48dp"
             tools:ignore="SpeakableTextPresentCheck" />
+
     </LinearLayout>
+
+    <SeekBar
+        android:id="@+id/seekBar1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/textoSeekBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/_0_dias" />
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:text="@string/simulador_de_plazo_fijo" />
+
+    <TextView
+        android:id="@+id/plazo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/plazo" />
+
+    <TextView
+        android:id="@+id/capital"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/capital" />
+
+    <TextView
+        android:id="@+id/interesesGanados"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/intereses_ganados" />
+
+    <TextView
+        android:id="@+id/montoTotal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/monto_total" />
+
+    <TextView
+        android:id="@+id/montoTotalAnual"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/monto_total_anual" />
+
+    <Button
+        android:id="@+id/botonConfirmar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:enabled="false"
+        android:text="@string/confirmar" />
 </LinearLayout>

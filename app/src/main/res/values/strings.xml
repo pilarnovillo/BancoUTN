@@ -8,4 +8,14 @@
     <string name="hola">Hola</string>
     <string name="tasa_efectiva_anual">Tasa Efectiva Anual</string>
     <string name="capital_a_invertir">Capital a Invertir($)</string>
+    <string name="_0_dias">0 dias</string>
+    <string name="tasa_nominal_anual">Tasa Nominal Anual</string>
+    <string name="simulador_de_plazo_fijo">Simulador de Plazo Fijo</string>
+    <string name="capital">Capital:</string>
+    <string name="intereses_ganados">Intereses ganados:</string>
+    <string name="monto_total">Monto total:</string>
+    <string name="monto_total_anual">Monto total anual:</string>
+    <string name="constituir">Constituir</string>
+    <string name="confirmar">Confirmar</string>
+    <string name="plazo">Plazo:</string>
 </resources>
