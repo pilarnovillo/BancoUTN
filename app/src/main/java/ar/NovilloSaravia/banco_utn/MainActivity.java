@@ -10,11 +10,19 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
+
 import ar.NovilloSaravia.banco_utn.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
+    private String nombre;
+    private String apellido;
+    private Double capital;
+    private int dias;
+    //TODO save status boton
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +49,8 @@ public class MainActivity extends AppCompatActivity {
                 startActivityForResult(i, 1); //TODO do we still use it like this?
             }
         });
+
+
     }
 
     @Override
@@ -50,8 +60,8 @@ public class MainActivity extends AppCompatActivity {
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == 1) {
                 binding.botonConstituir.setEnabled(true);
-                Double capital = data.getExtras().getDouble("capital");
-                Integer dias = data.getExtras().getInt("dias");
+                capital = data.getExtras().getDouble("capital");
+                dias = data.getExtras().getInt("dias");
 
                 binding.botonConstituir.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -59,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
                         AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
 
                         builder.setTitle("Felicitaciones " + binding.editTextTextPersonName.getText().toString()+" "+binding.editTextTextApellido.getText().toString());
-                        builder.setMessage("Tu plazo fijo de "+capital.toString()+" pesos por "+dias.toString()+" dias ha sido construido!");
+                        builder.setMessage("Tu plazo fijo de "+capital.toString()+" pesos por "+dias+" dias ha sido construido!");
                         builder.setPositiveButton("piola!", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 // START THE GAME!
@@ -70,6 +80,23 @@ public class MainActivity extends AppCompatActivity {
                 });
             }
         }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("nombre",nombre);
+        outState.putString("apellido",apellido);
+        outState.putDouble("capital",capital);
+        outState.putInt("dias",dias);
+    }
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        nombre = savedInstanceState.getString("nombre");
+        apellido = savedInstanceState.getString("apellido");
+        capital = savedInstanceState.getDouble("capital");
+        dias = savedInstanceState.getInt("dias");
     }
 
 }
