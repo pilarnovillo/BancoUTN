@@ -15,6 +15,7 @@ import ar.NovilloSaravia.banco_utn.databinding.ActivitySimularPlazoFijoBinding;
 public class SimularPlazoFijo extends AppCompatActivity {
 
     private ActivitySimularPlazoFijoBinding binding;
+    private boolean btnConfirmar = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,7 +121,20 @@ public class SimularPlazoFijo extends AppCompatActivity {
 
         //TODO check that all the values are valid if something is invalid disable button
         binding.botonConfirmar.setEnabled(true);
+        btnConfirmar = true;
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean("btnConfirmar", btnConfirmar);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        btnConfirmar = savedInstanceState.getBoolean("btnConfirmar");
+        binding.botonConfirmar.setEnabled(btnConfirmar);
+    }
 
 }

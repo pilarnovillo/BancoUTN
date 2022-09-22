@@ -10,18 +10,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 
 import ar.NovilloSaravia.banco_utn.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
-    private String nombre;
-    private String apellido;
-    private Double capital;
+    private Double capital = (double) 0;
     private int dias;
-    //TODO save status boton
+    private boolean btnConstituirEstado = false;
 
 
     @Override
@@ -46,10 +43,29 @@ public class MainActivity extends AppCompatActivity {
                 Intent i =
                         new Intent(MainActivity.this,
                                 SimularPlazoFijo.class);
-                startActivityForResult(i, 1); //TODO do we still use it like this?
+                startActivityForResult(i, 1);
             }
         });
 
+        binding.botonConstituir.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+
+                        builder.setTitle("Felicitaciones " + binding.editTextTextPersonName.getText().toString() + " " + binding.editTextTextApellido.getText().toString());
+                        builder.setMessage("Tu plazo fijo de " + capital.toString() + " pesos por " + dias + " dias ha sido construido!");
+                        builder.setPositiveButton("piola!", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                binding.editTextTextPersonName.getText().clear();
+                                binding.editTextTextApellido.getText().clear();
+                                binding.botonConstituir.setEnabled(false);
+                            }
+                        });
+                        builder.show();
+                    }
+                }
+        );
 
     }
 
@@ -60,24 +76,11 @@ public class MainActivity extends AppCompatActivity {
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == 1) {
                 binding.botonConstituir.setEnabled(true);
+                btnConstituirEstado = true;
                 capital = data.getExtras().getDouble("capital");
                 dias = data.getExtras().getInt("dias");
 
-                binding.botonConstituir.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
 
-                        builder.setTitle("Felicitaciones " + binding.editTextTextPersonName.getText().toString()+" "+binding.editTextTextApellido.getText().toString());
-                        builder.setMessage("Tu plazo fijo de "+capital.toString()+" pesos por "+dias+" dias ha sido construido!");
-                        builder.setPositiveButton("piola!", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                // START THE GAME!
-                            }
-                        });
-                        builder.show();
-                    }
-                });
             }
         }
     }
@@ -85,18 +88,18 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putString("nombre",nombre);
-        outState.putString("apellido",apellido);
-        outState.putDouble("capital",capital);
-        outState.putInt("dias",dias);
+        outState.putDouble("capital", capital);
+        outState.putInt("dias", dias);
+        outState.putBoolean("btnConstituirEstado", btnConstituirEstado);
     }
+
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        nombre = savedInstanceState.getString("nombre");
-        apellido = savedInstanceState.getString("apellido");
         capital = savedInstanceState.getDouble("capital");
         dias = savedInstanceState.getInt("dias");
+        btnConstituirEstado = savedInstanceState.getBoolean("btnConstituirEstado");
+        binding.botonConstituir.setEnabled(btnConstituirEstado);
     }
 
 }

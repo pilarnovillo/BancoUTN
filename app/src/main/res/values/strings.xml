@@ -18,4 +18,6 @@
     <string name="constituir">Constituir</string>
     <string name="confirmar">Confirmar</string>
     <string name="plazo">Plazo:</string>
+    <string name="banco_utn_santa_fe">Banco UTN Santa Fe</string>
+    <string name="logo_utn">logo utn</string>
 </resources>
