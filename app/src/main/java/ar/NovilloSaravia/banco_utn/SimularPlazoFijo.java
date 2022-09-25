@@ -10,12 +10,16 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.SeekBar;
 
+import java.text.DecimalFormat;
+
 import ar.NovilloSaravia.banco_utn.databinding.ActivitySimularPlazoFijoBinding;
 
 public class SimularPlazoFijo extends AppCompatActivity {
 
     private ActivitySimularPlazoFijoBinding binding;
     private boolean btnConfirmar = false;
+    private static final DecimalFormat df = new DecimalFormat("0.00");
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,10 +80,13 @@ public class SimularPlazoFijo extends AppCompatActivity {
 
 
         //Captura de cambio de valor en SeekBar
+        binding.seekBar1.setMax(360);
+        binding.seekBar1.incrementProgressBy(1);
+        binding.seekBar1.setProgress(0);
         binding.seekBar1.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                binding.textoSeekBar.setText((progress*360)/100+" dias");
+                binding.textoSeekBar.setText(progress+" dias");
                 calcular();
             }
             @Override
@@ -96,7 +103,7 @@ public class SimularPlazoFijo extends AppCompatActivity {
                         Double.valueOf(
                                 binding.textoCapital.getText().toString())
                 );
-                intentResultado.putExtra("dias",(binding.seekBar1.getProgress()*360)/100);
+                intentResultado.putExtra("dias",binding.seekBar1.getProgress());
                 setResult(Activity.RESULT_OK,intentResultado);
                 finish();
 
@@ -105,23 +112,46 @@ public class SimularPlazoFijo extends AppCompatActivity {
     }
 
     protected void calcular(){
-        //Getting Detalles
-        binding.plazo.setText("Plazo: "+(binding.seekBar1.getProgress()*360)/100+" dias");
 
-        binding.capital.setText("Capital: "+binding.textoCapital.getText());
+        int dias = binding.seekBar1.getProgress();
 
-//        EditText textoTasaNominal = findViewById(R.id.textoTasaNominal);
-//        EditText textoTasaEfectiva = findViewById(R.id.textoTasaEfectiva);
-        //TODO calculate intereses
-        binding.interesesGanados.setText("Intereses ganados: $ intereses");
 
-        binding.montoTotal.setText("Montot total: $ Intereses + capital");
+        String textoCapital=binding.textoCapital.getText().toString();
 
-        binding.montoTotalAnual.setText("Monto total anual: $"+binding.textoTasaNominal.getText());
 
-        //TODO check that all the values are valid if something is invalid disable button
-        binding.botonConfirmar.setEnabled(true);
-        btnConfirmar = true;
+        String textoTasaNominal = binding.textoTasaNominal.getText().toString();
+        Double tasaNominal;
+        if (!textoTasaNominal.isEmpty()){
+            tasaNominal=Double.valueOf(textoTasaNominal);
+        }
+        else{
+            tasaNominal=Double.valueOf(0);
+        }
+        Double capital;
+        if (!textoCapital.isEmpty()){
+            capital=Double.valueOf(textoCapital);
+        }else{
+            capital=Double.valueOf(0);
+        }
+        Double meses = Double.valueOf(dias)/12/30;
+        Double intereses= (tasaNominal/100)*capital*meses;
+
+        binding.plazo.setText("Plazo: "+dias+" dias");
+        binding.capital.setText("Capital: "+df.format(capital));
+        binding.interesesGanados.setText("Intereses ganados: $"+df.format(intereses));
+        binding.montoTotal.setText("Montot total: $"+df.format(intereses+capital));
+        binding.montoTotalAnual.setText("Monto total anual: $"+df.format(capital+intereses*12));
+
+        //check that all the values are valid if something is invalid disable button
+        if (capital.equals(Double.valueOf(0))){
+            binding.botonConfirmar.setEnabled(false);
+            btnConfirmar = false;
+        }
+        else{
+            binding.botonConfirmar.setEnabled(true);
+            btnConfirmar = true;
+        }
+
     }
 
     @Override
